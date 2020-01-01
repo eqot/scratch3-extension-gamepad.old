@@ -9673,9 +9673,9 @@ scratch-l10n@3.7.20191219145348:
     transifex "1.6.6"
 
 scratch-l10n@^3.1.20181129221712:
-  version "3.7.20191224224558"
-  resolved "https://registry.yarnpkg.com/scratch-l10n/-/scratch-l10n-3.7.20191224224558.tgz#a8b576fe063158f1cd5f170d3a84b81c7e9d0169"
-  integrity sha512-3ZLyBxi6IczQuj1h13UpXb3U/RAH4lBdoG7U7rOkeRFdrOV4/L1jmfkkykK1SPf8Pid23kiTLbtUqoDMobkWsA==
+  version "3.7.20191231224638"
+  resolved "https://registry.yarnpkg.com/scratch-l10n/-/scratch-l10n-3.7.20191231224638.tgz#871e0e12e969304653ca391686bc1df51ee4c0e6"
+  integrity sha512-nIVNq4FVuTNt3vc9xINGc0LsfWNgqm/KAizO0lPlp9riqZwEcxtnOY6hX5xL5K2Zr0qYOyHKskCpVXbqcoDVww==
   dependencies:
     "@babel/cli" "^7.1.2"
     "@babel/core" "^7.1.2"

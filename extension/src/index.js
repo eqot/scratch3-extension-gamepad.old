@@ -4,9 +4,20 @@ const Cast = require('scratch-vm/src/util/cast')
 
 const config = require('./config.js')
 
-class DummyBlocks {
+class GamepadBlocks {
   constructor(runtime) {
     this.runtime = runtime
+
+    this.gamepadIndex = null
+
+    window.addEventListener('gamepadconnected', event => {
+      console.log('Gamepad has been connected')
+      this.gamepadIndex = event.gamepad.index
+    })
+    window.addEventListener('gamepaddisconnected', () => {
+      console.log('Gamepad has been disconnected')
+      this.gamepadIndex = null
+    })
   }
 
   static get gui() {
@@ -26,7 +37,7 @@ class DummyBlocks {
   }
 
   static get vm() {
-    return { [config.id]: () => DummyBlocks }
+    return { [config.id]: () => GamepadBlocks }
   }
 
   getInfo() {
@@ -40,26 +51,70 @@ class DummyBlocks {
       color3: config.colors && config.colors[2],
       blocks: [
         {
-          opcode: 'say',
-          blockType: BlockType.REPORTER,
-          text: 'say [MESSAGE]',
+          opcode: 'whatButtonPressed',
+          blockType: BlockType.HAT,
+          text: 'when [BUTTON] is pressed',
           arguments: {
-            MESSAGE: {
-              type: ArgumentType.STRING,
-              defaultValue: 'Hello, World!'
+            BUTTON: {
+              type: ArgumentType.NUMBER,
+              menu: 'buttons',
+              defaultValue: 0
             }
           }
+        },
+        {
+          opcode: 'isButtonPressed',
+          blockType: BlockType.BOOLEAN,
+          text: '[BUTTON] is pressed',
+          arguments: {
+            BUTTON: {
+              type: ArgumentType.NUMBER,
+              menu: 'buttons',
+              defaultValue: 0
+            }
+          },
+          func: 'whatButtonPressed'
         }
-      ]
+      ],
+      menus: {
+        buttons: {
+          acceptReporters: true,
+          items: [
+            {
+              text: '✕',
+              value: 0
+            },
+            {
+              text: '○',
+              value: 1
+            },
+            {
+              text: '□',
+              value: 2
+            },
+            {
+              text: '△',
+              value: 3
+            }
+          ]
+        }
+      }
     }
   }
 
-  say(args) {
-    const message = Cast.toString(args.MESSAGE)
-    console.log(message)
+  whatButtonPressed(args) {
+    if (this.gamepadIndex === null) {
+      return false
+    }
 
-    return message
+    const gamepad = navigator.getGamepads()[this.gamepadIndex]
+    if (!gamepad) {
+      return false
+    }
+
+    const buttonIndex = Cast.toNumber(args.BUTTON)
+    return gamepad.buttons[buttonIndex].pressed
   }
 }
 
-module.exports = DummyBlocks
+module.exports = GamepadBlocks
