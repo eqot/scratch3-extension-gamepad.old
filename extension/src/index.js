@@ -70,24 +70,24 @@ class GamepadBlocks {
         {
           opcode: 'whatButtonPressed',
           blockType: BlockType.HAT,
-          text: 'when [BUTTON] is pressed',
+          text: 'when [BUTTON] button is pressed',
           arguments: {
             BUTTON: {
               type: ArgumentType.NUMBER,
               menu: 'buttons',
-              defaultValue: 0
+              defaultValue: 12
             }
           }
         },
         {
           opcode: 'isButtonPressed',
           blockType: BlockType.BOOLEAN,
-          text: '[BUTTON] is pressed',
+          text: '[BUTTON] button is pressed',
           arguments: {
             BUTTON: {
               type: ArgumentType.NUMBER,
               menu: 'buttons',
-              defaultValue: 0
+              defaultValue: 12
             }
           },
           func: 'whatButtonPressed'
@@ -124,20 +124,76 @@ class GamepadBlocks {
           acceptReporters: true,
           items: [
             {
-              text: '✕',
+              text: 'up',
+              value: 12
+            },
+            {
+              text: 'down',
+              value: 13
+            },
+            {
+              text: 'right',
+              value: 15
+            },
+            {
+              text: 'left',
+              value: 14
+            },
+            {
+              text: 'cross',
               value: 0
             },
             {
-              text: '○',
+              text: 'circle',
               value: 1
             },
             {
-              text: '□',
+              text: 'square',
               value: 2
             },
             {
-              text: '△',
+              text: 'triangle',
               value: 3
+            },
+            {
+              text: 'left stick',
+              value: 10
+            },
+            {
+              text: 'right stick',
+              value: 11
+            },
+            {
+              text: 'left shoulder',
+              value: 4
+            },
+            {
+              text: 'right shoulder',
+              value: 5
+            },
+            {
+              text: 'left trigger',
+              value: 6
+            },
+            {
+              text: 'right trigger',
+              value: 7
+            },
+            {
+              text: 'share',
+              value: 8
+            },
+            {
+              text: 'options',
+              value: 9
+            },
+            {
+              text: 'touch pad',
+              value: 17
+            },
+            {
+              text: 'PS',
+              value: 16
             }
           ]
         }
