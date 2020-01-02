@@ -51,6 +51,23 @@ class GamepadBlocks {
       color3: config.colors && config.colors[2],
       blocks: [
         {
+          opcode: 'getAxes',
+          blockType: BlockType.REPORTER,
+          text: '[AXIS] value for [STICK] stick',
+          arguments: {
+            STICK: {
+              type: ArgumentType.NUMBER,
+              menu: 'sticks',
+              defaultValue: 0
+            },
+            AXIS: {
+              type: ArgumentType.NUMBER,
+              menu: 'axes',
+              defaultValue: 0
+            }
+          }
+        },
+        {
           opcode: 'whatButtonPressed',
           blockType: BlockType.HAT,
           text: 'when [BUTTON] is pressed',
@@ -77,6 +94,32 @@ class GamepadBlocks {
         }
       ],
       menus: {
+        sticks: {
+          acceptReporters: true,
+          items: [
+            {
+              text: 'left',
+              value: 0
+            },
+            {
+              text: 'right',
+              value: 1
+            }
+          ]
+        },
+        axes: {
+          acceptReporters: true,
+          items: [
+            {
+              text: 'X',
+              value: 0
+            },
+            {
+              text: 'Y',
+              value: 1
+            }
+          ]
+        },
         buttons: {
           acceptReporters: true,
           items: [
@@ -100,6 +143,22 @@ class GamepadBlocks {
         }
       }
     }
+  }
+
+  getAxes(args) {
+    if (this.gamepadIndex === null) {
+      return false
+    }
+
+    const gamepad = navigator.getGamepads()[this.gamepadIndex]
+    if (!gamepad) {
+      return false
+    }
+
+    const stickIndex = Cast.toNumber(args.STICK)
+    const axisIndex = Cast.toNumber(args.AXIS)
+
+    return gamepad.axes[stickIndex * 2 + axisIndex]
   }
 
   whatButtonPressed(args) {
