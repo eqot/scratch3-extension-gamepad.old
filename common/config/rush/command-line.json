@@ -130,6 +130,14 @@
       "enableParallelism": true,
       "ignoreDependencyOrder": true,
       "ignoreMissingScript": true
+    },
+    {
+      "commandKind": "global",
+      "name": "deploy",
+      "summary": "Deploy to GitHub Pages",
+      "description": "Deploy built files to GitHub Pages",
+      "safeForSimultaneousRushProcesses": false,
+      "shellCommand": "touch scratch-gui/build/.nojekyll && ./scratch-gui/node_modules/.bin/gh-pages -t -d scratch-gui/build -m \"Build for $(git log --pretty=format:%H -n1)\""
     }
   ],
 
