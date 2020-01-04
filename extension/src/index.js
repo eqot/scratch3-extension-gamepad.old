@@ -55,42 +55,42 @@ class GamepadBlocks {
           blockType: BlockType.REPORTER,
           text: '[AXIS] value for [STICK] stick',
           arguments: {
-            STICK: {
-              type: ArgumentType.NUMBER,
-              menu: 'sticks',
-              defaultValue: 0
-            },
             AXIS: {
               type: ArgumentType.NUMBER,
               menu: 'axes',
-              defaultValue: 0
+              defaultValue: '0'
+            },
+            STICK: {
+              type: ArgumentType.NUMBER,
+              menu: 'sticks',
+              defaultValue: '0'
             }
           }
         },
         {
-          opcode: 'whatButtonPressed',
+          opcode: 'whenButtonPressed',
           blockType: BlockType.HAT,
-          text: 'when [BUTTON] button is pressed',
+          text: 'when [BUTTON] button pressed',
           arguments: {
             BUTTON: {
               type: ArgumentType.NUMBER,
               menu: 'buttons',
-              defaultValue: 12
+              defaultValue: '12'
             }
           }
         },
         {
           opcode: 'isButtonPressed',
           blockType: BlockType.BOOLEAN,
-          text: '[BUTTON] button is pressed',
+          text: '[BUTTON] button pressed?',
           arguments: {
             BUTTON: {
               type: ArgumentType.NUMBER,
               menu: 'buttons',
-              defaultValue: 12
+              defaultValue: '12'
             }
           },
-          func: 'whatButtonPressed'
+          func: 'whenButtonPressed'
         }
       ],
       menus: {
@@ -99,11 +99,11 @@ class GamepadBlocks {
           items: [
             {
               text: 'left',
-              value: 0
+              value: '0'
             },
             {
               text: 'right',
-              value: 1
+              value: '1'
             }
           ]
         },
@@ -112,11 +112,11 @@ class GamepadBlocks {
           items: [
             {
               text: 'X',
-              value: 0
+              value: '0'
             },
             {
               text: 'Y',
-              value: 1
+              value: '1'
             }
           ]
         },
@@ -125,75 +125,75 @@ class GamepadBlocks {
           items: [
             {
               text: 'up',
-              value: 12
+              value: '12'
             },
             {
               text: 'down',
-              value: 13
+              value: '13'
             },
             {
               text: 'right',
-              value: 15
+              value: '15'
             },
             {
               text: 'left',
-              value: 14
+              value: '14'
             },
             {
               text: 'cross',
-              value: 0
+              value: '0'
             },
             {
               text: 'circle',
-              value: 1
+              value: '1'
             },
             {
               text: 'square',
-              value: 2
+              value: '2'
             },
             {
               text: 'triangle',
-              value: 3
+              value: '3'
             },
             {
               text: 'left stick',
-              value: 10
+              value: '10'
             },
             {
               text: 'right stick',
-              value: 11
+              value: '11'
             },
             {
               text: 'left shoulder',
-              value: 4
+              value: '4'
             },
             {
               text: 'right shoulder',
-              value: 5
+              value: '5'
             },
             {
               text: 'left trigger',
-              value: 6
+              value: '6'
             },
             {
               text: 'right trigger',
-              value: 7
+              value: '7'
             },
             {
               text: 'share',
-              value: 8
+              value: '8'
             },
             {
               text: 'options',
-              value: 9
+              value: '9'
             },
             {
               text: 'touch pad',
-              value: 17
+              value: '17'
             },
             {
               text: 'PS',
-              value: 16
+              value: '16'
             }
           ]
         }
@@ -213,11 +213,12 @@ class GamepadBlocks {
 
     const stickIndex = Cast.toNumber(args.STICK)
     const axisIndex = Cast.toNumber(args.AXIS)
+    const sign = axisIndex === 0 ? 1 : -1
 
-    return gamepad.axes[stickIndex * 2 + axisIndex]
+    return gamepad.axes[stickIndex * 2 + axisIndex] * sign
   }
 
-  whatButtonPressed(args) {
+  whenButtonPressed(args) {
     if (this.gamepadIndex === null) {
       return false
     }
